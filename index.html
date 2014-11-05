@@ -299,8 +299,8 @@ layout: false
 .right-column[
 ## Parallel Execution
 
-Parallel execution is when your code takes advantage of each of your CPU to make computations on each of them in parallel.
-This is very useful in CPU-bound tasks as you are utilizing each processor.
+Parallel execution is when your code takes advantage of each of your processors to make computations on each of them in parallel.
+This is very useful in CPU-bound tasks as you are utilizing each core in your processor.
 ]
 
 
@@ -312,7 +312,7 @@ This is very useful in CPU-bound tasks as you are utilizing each processor.
 .right-column[
 ![image](./pics/parallel.png)
 
-Think of each oven as a CPU.
+Think of each oven as a core in your CPU.
 ]
 
 
@@ -370,7 +370,7 @@ This is very useful in CPU-bound tasks as you are utilizing each processor.
 
 ### Is parallel always faster?
 
-No, in tasks that are IO-bound, the added time to communicate between the CPU can eliminate any advantage that spreading the work between the CPU gained.
+No, in tasks that are IO-bound, the added time to communicate between the cores in your CPU(s) can eliminate any advantage that spreading the work between the CPU gained.
 ]
 
 
