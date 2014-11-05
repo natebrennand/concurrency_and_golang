@@ -232,10 +232,12 @@ Golang is special in that you conccurency operators are primitives built into th
 // create a channel for strings
 messageChan := make(chan string)
 
+func sayHi(msgChan chan string) {
+  msgChan <- "Hello"
+}
+
 // send a function off
-go func(msgChan chan string) {
-  msgChan <- "Hi"
-}(messageChan)
+go sayHi(messageChan)
 
 // wait for a return value
 msg :=<- messageChan
@@ -353,6 +355,82 @@ Currently you must tell the runtime if you wish to utilize multiple processors (
 import "runtime"
 runtime.GOMAXPROCS(runtime.NumCPU())
 ```
+]
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Golang
+]
+.right-column[
+## A quick intro to Go
+
+We're not going to do an overview of all the syntax, you can easily learn that on your own.
+]
+
+
+
+--
+.right-column[
+# Why should I try go?
+]
+
+
+
+
+
+--
+.right-column[
+- It's simple
+  - You'll learn almost the entire language by going through the tour
+  - It's easy to write
+- It's Fast
+  - Runs close to C speed
+  - Also, the compiler is blazing
+- Tools
+]
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Golang
+### Tools
+]
+.right-column[
+## Tools
+
+Despite it's young age, Golang has one of the most mature toolsets for development.
+This makes writing Go a pleasure.
+
+- Compile
+  - Since it's so fast, it's common to compile on save
+  - This makes your feedback loop very fast
+- Build
+  - `go build` will intelligently find all dependencies as well as download them if necessary
+- Formatting
+  - All Go code is formatted the same way
+  - `go fmt`
+- Dependency management
+  - Simply `go get <repo name>` to download and install
+- Installation
+  - `go install <repo name>`
+  - Want to install Ubuntu's enormous 23K commit devops system?
+    - `go install -v github.com/juju/juju/...`
+- [Profiling](http://blog.golang.org/profiling-go-programs_havlak4a-mallocgc-trim.png)
+- Plus many community driven tools
+
 ]
 
 
