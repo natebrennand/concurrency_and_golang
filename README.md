@@ -4,6 +4,8 @@
 This repository contains a slideshow (`index.html`) and example code for a talk on concurrency and Golang.
 
 
+## [SLIDES](http://natebrennand.github.io/concurrency_and_golang/)
+
 
 ## Example Code
 
