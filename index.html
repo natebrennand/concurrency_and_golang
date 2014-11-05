@@ -198,8 +198,17 @@ layout: false
 ### Types of concurrency
 ]
 .right-column[
-  We're going to focus on asynchronous and parallel programming for this talk.
+### We're going to focus on two ways you can execute your programs concurrently
+
+### - asynchronous
+### - parallel
 ]
+
+
+
+
+
+
 
 
 
@@ -213,39 +222,64 @@ layout: false
 ##  Concurrency
 ### When is this useful?
 ### Types of concurrency
-### Go intro
 ]
 .right-column[
+So imagine we have a ton of bricks...
 
-### Concurrency Primitives
-
-Golang is special in that you conccurency operators are primitives built into the language, not libraries you import.
-
-- `go` is a keyword that creates a go-routine (like a thread).
-  - functions called with `go` are executed in the background
-- `chan` is a channel (like a queue).
-  - Channels are used like queues, you can pass values in and take values out
-  - All operations are threadsafe.
-  - Channels must have a type
-
-```go
-// create a channel for strings
-messageChan := make(chan string)
-
-func sayHi(msgChan chan string) {
-  msgChan <- "Hello"
-}
-
-// send a function off
-go sayHi(messageChan)
-
-// wait for a return value
-msg :=<- messageChan
-```
+![image](./pics/bricks.png)
 ]
 
 
 
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+]
+.right-column[
+So imagine we have a ton of bricks...
+
+![image](./pics/bricks.png)
+
+... and we need to get them all to the oven to be fired ...
+
+![image](./pics/oven.png)
+]
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+]
+.right-column[
+So imagine we have a ton of bricks...
+
+![image](./pics/bricks.png)
+
+... and we need to get them all to the oven to be fired ...
+
+![image](./pics/oven.png)
+
+... thankfully we have a bunch of gophers to help!
+
+![image](./pics/empty_wheelbarrow.png)
+]
+
+
+--
+.right-column[
+![image](./pics/single.png)
+]
 
 
 
@@ -260,7 +294,6 @@ layout: false
 ##  Concurrency
 ### When is this useful?
 ### Types of concurrency
-### Go intro
 ### Parallelism
 ]
 .right-column[
