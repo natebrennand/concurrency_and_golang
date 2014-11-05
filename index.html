@@ -136,26 +136,247 @@ class: center, middle
 
 - Concurrency
 - Asynchronous
-- Parallism
+- Parallelism
 - Threads
 - Golang
+
+
+
+
 
 
 ---
 layout: false
 
-
 .left-column[
 ## Concurrency
 ]
 .right-column[
-
 __Concurrent__ programs can have multiple computations executing during overlapping periods of time.
 
 This is opposed to __sequential__ programs in which no computations can be executed in overlapping periods of time.
-
-
 ]
+
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+]
+.right-column[
+  Generally speaking, concurrency can be useful when there is large amounts of computation or when there is input/output:
+
+  - data analysis
+  - webservers
+  - filesystems
+  - web browsers
+  - smartphones
+  - etc
+]
+
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+]
+.right-column[
+  We're going to focus on asynchronous and parallel programming for this talk.
+]
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+### Go intro
+]
+.right-column[
+
+### Concurrency Primitives
+
+Golang is special in that you conccurency operators are primitives built into the language, not libraries you import.
+
+- `go` is a keyword that creates a go-routine (like a thread).
+  - functions called with `go` are executed in the background
+- `chan` is a channel (like a queue).
+  - Channels are used like queues, you can pass values in and take values out
+  - All operations are threadsafe.
+  - Channels must have a type
+
+```go
+// create a channel for strings
+messageChan := make(chan string)
+
+// send a function off
+go func(msgChan chan string) {
+  msgChan <- "Hi"
+}(messageChan)
+
+// wait for a return value
+msg :=<- messageChan
+```
+]
+
+
+
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+### Go intro
+### Parallelism
+]
+.right-column[
+## Parallel Execution
+
+Parallel execution is when your code takes advantage of each of your CPU to make computations on each of them in parallel.
+This is very useful in CPU-bound tasks as you are utilizing each processor.
+
+### Is parallel always faster?
+]
+
+
+
+
+
+--
+.right-column[
+No, in tasks that are IO-bound, the added time to communicate between the CPU can eliminate any advantage that spreading the work between the CPU gained.
+]
+
+
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+### Go intro
+### Parallelism
+### Async
+]
+.right-column[
+## Asynchronous Execution
+
+An asynchronous function call is a call that executes in the background.
+Asynchronous functions are useful in IO-bound tasks since
+
+http://play.golang.org/p/TUEuKIiSLK
+```go
+print("1 ")
+
+go func() {
+  time.Sleep(time.Second)
+  print("2 ")
+}
+
+print("3 ")
+
+>> 1 3 2
+```
+
+The function is executed executed asynchronously because of the `go` keyword.
+After the function is called, it will begin to execute in the background.
+]
+
+
+
+
+
+
+
+---
+layout: false
+
+.left-column[
+##  Concurrency
+### When is this useful?
+### Types of concurrency
+### Go intro
+### Parallelism
+### Async
+### Parallel Go
+]
+.right-column[
+
+### How does Go parallelize?
+
+The Golang runtime spreads the work of each go-routine between multiple threads.
+
+Currently you must tell the runtime if you wish to utilize multiple processors (this is on the roadmap to be abstracted away).
+
+```go
+// enabling parallelism in Go
+import "runtime"
+runtime.GOMAXPROCS(runtime.NumCPU())
+```
+]
+
+
+
+
+
+---
+
+## Now lets move on to some code
+
+# http://bit.ly/adi_concurrency
+
+### https://github.com/natebrennand/concurrency_and_golang/
+
+<br>
+<br>
+<br>
+
+If you wish to test out anything in Go without installing it:
+
+## http://play.golang.org/
+
+
+
 
 
 
