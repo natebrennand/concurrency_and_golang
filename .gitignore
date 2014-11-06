@@ -3,3 +3,6 @@
 10workers/10workers
 synchronous/synchronous
 routine_per_cat/routine_per_cat
+
+!pics/
+*.jpg

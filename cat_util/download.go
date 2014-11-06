@@ -18,7 +18,7 @@ func GetList(filename string) ([]string, error) {
 }
 
 func GetCat(url string) error {
-	resp, err := http.Get("http://" + url)
+	resp, err := http.Get(url)
 	if err != nil {
 		return fmt.Errorf("Failed to download cat => %s", err.Error())
 	}
