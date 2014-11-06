@@ -135,8 +135,8 @@ class: center, middle
 # Agenda
 
 - Concurrency
-- Asynchronous
 - Parallelism
+- Asynchronous
 - Threads
 - Golang
 
@@ -232,6 +232,11 @@ So imagine we have a ton of bricks...
 
 
 
+
+
+
+
+
 ---
 layout: false
 
@@ -249,6 +254,11 @@ So imagine we have a ton of bricks...
 
 ![image](./pics/oven.png)
 ]
+
+
+
+
+
 
 
 
@@ -370,7 +380,7 @@ This is very useful in CPU-bound tasks as you are utilizing each processor.
 
 ### Is parallel always faster?
 
-No, in tasks that are IO-bound, the added time to communicate between the cores in your CPU(s) can eliminate any advantage that spreading the work between the CPU gained.
+No, in tasks that are IO-bound, the added time to communicate between the cores in your CPU(s) can eliminate any advantage that spreading the work gained.
 ]
 
 
@@ -396,24 +406,134 @@ layout: false
 
 An asynchronous function call is a call that executes in the background.
 Asynchronous functions are useful in IO-bound tasks since
+]
 
-http://play.golang.org/p/TUEuKIiSLK
+
+
+
+
+
+--
+.right-column[
+![image](./pics/async.jpg)
+
+
+Imagine that every time you call `fire_bricks()` a gopher is sent to do your work!
+You can call the function repeatedly and gophers will be sent to work at the same time.
+
+However, you're limited by how many gophers can use the oven at once.
+]
+
+
+
+
+
+
+---
+# So why have we been talking about gophers this whole time?
+
+
+
+
+
+--
+Gophers are the mascot of Go(lang), a statically typed language developed by Google.
+
+Go is special in that there are concurrency primitives.
+This makes it very simple to make your programs asynchronous or parallel.
+
+
+
+
+
+
+
+
+
+
+
+---
+## Concurrency Primitives
+
+Golang is special in that you conccurency operators are primitives built into the language, not libraries you import.
+
+- `go` is a keyword that creates a go-routine (like a thread).
+  - functions called with `go` are executed in the background
+
+
+
+--
 ```go
-print("1 ")
-
-go func() {
+func two() {
   time.Sleep(time.Second)
   print("2 ")
 }
 
+print("1 ")
+
+func two()
+
 print("3 ")
 
->> 1 3 2
 ```
 
-The function is executed executed asynchronously because of the `go` keyword.
-After the function is called, it will begin to execute in the background.
-]
+So what should this print?
+
+
+
+
+
+--
+### `1 3 2`
+
+
+
+--
+Check the link if you don't believe me!
+
+http://play.golang.org/p/m_LXVQhlru
+
+
+
+
+
+
+
+
+---
+## Concurrency Primitives
+
+
+- `chan` is a channel (like a queue).
+  - Channels are used like queues, you can pass values in and take values out
+  - All operations are threadsafe.
+  - Channels must have a type
+
+
+
+
+
+--
+```go
+func sayHi(msgChan chan string) {
+  msgChan <- "Hello"
+}
+
+
+// create a channel for strings
+messageChan := make(chan string)
+
+// call a function asynchronously
+go sayHi(messageChan)
+
+// wait for a return value
+// this will block until a string is sent into messageChan
+msg :=<- messageChan
+```
+
+
+
+
 
 
 
@@ -424,28 +544,24 @@ After the function is called, it will begin to execute in the background.
 ---
 layout: false
 
-.left-column[
-##  Concurrency
-### When is this useful?
-### Types of concurrency
-### Parallelism
-### Async
-### Parallel Go
-]
-.right-column[
+# How does Go parallelize?
 
-### How does Go parallelize?
 
+--
 The Golang runtime spreads the work of each go-routine between multiple threads.
 
-Currently you must tell the runtime if you wish to utilize multiple processors (this is on the roadmap to be abstracted away).
+Currently you must tell the runtime if you wish to utilize multiple cores (this is on the roadmap to be abstracted away).
 
 ```go
 // enabling parallelism in Go
 import "runtime"
+
 runtime.GOMAXPROCS(runtime.NumCPU())
 ```
-]
+
+
+
+
 
 
 
